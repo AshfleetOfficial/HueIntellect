@@ -62,7 +62,6 @@ window.onload = () => {
     const RandomizeBTN = document.getElementById("Randomize")
     const primaryColorBox = document.querySelector(".box#primary")
     const secondaryColorBox = document.querySelector(".box#secondary")
-    const complementeryColorBox = document.querySelector(".box#complementery")
     const primaryTextColorBox = document.querySelector(".box#primaryText")
     const accentColorBox = document.querySelector(".box#accent")
     const secondaryTextColorBox = document.querySelector(".box#secondaryText")
@@ -71,7 +70,6 @@ window.onload = () => {
     let primaryColor = hslToHex(0, 0, 0);
     let secondaryColor = hslToHex(0, 0, 0);
     let primaryTextColor = hslToHex(0, 0, 0);
-    let complementaryColor = hslToHex(0, 0, 0);
     let secondaryTextColor = hslToHex(0, 0, 0);
     let accentColor = hslToHex(0, 0, 0);
 
@@ -88,23 +86,19 @@ window.onload = () => {
         //* ========== Primary Color ==========
         const primaryHue = (h >= 0) ? ((h + Math.random() * (Math.random() < 0.1 ? -20 : 20)) + 360) % 360 : Math.floor(Math.random() * 360);
         const primarySaturation = (s >= 0) ? s : Math.floor(Math.random() * 100);
-        const primaryLightness = (l >= 0) ? l : Math.floor(Math.random() * 30);
+        const primaryLightness = (l >= 0) ? l : Math.floor(Math.random() * 25);
         primaryColor = `${hslToHex(primaryHue, primarySaturation, primaryLightness)}`;
 
 
         //* ========== Secondary Color ==========
         const secondaryHue = (((primaryHue + (10 + Math.random() * ((Math.random() > 0.5) ? +20 : -20)))) + 360) % 360;
-        // const secondarySaturation = primarySaturation + (3 + Math.random() * ((primarySaturation < 50) ? 10 : -10));
-        const secondarySaturation = primarySaturation;
-
-        const secondaryLightness = Math.min(100, primaryLightness + ((primaryLightness > 50) ? (2 + Math.random() * 10) * -1 : (2 + Math.random() * 10)));
+        const secondaryLightness = Min(100, primaryLightness + ((primaryLightness > 50) ? -5 : 5));
+        const secondarySaturation = Min(100, primarySaturation + ((primarySaturation > 50) ? -10 : 10));
         secondaryColor = `${hslToHex(secondaryHue, secondarySaturation, secondaryLightness)}`;
 
 
         //* ========== Complementery Color ==========
         const complementaryHue = (primaryHue + 180) % 360;
-        complementaryColor = `${hslToHex(complementaryHue, primarySaturation, primaryLightness)}`;
-
 
 
         //* ========== Accent Color ==========
@@ -113,8 +107,8 @@ window.onload = () => {
         accentSaturation %= 100;
         let hueDifference = accentHue - primaryHue;
         hueDifference = (hueDifference < 0) ? hueDifference * -1 : hueDifference;
-        if (hueDifference < 130) {
-            accentHue += 130 - hueDifference;
+        if (hueDifference < 140) {
+            accentHue += 140 - hueDifference;
             accentHue %= 360;
         }
         const accentLightness = Min(100, primaryLightness + ((primaryLightness > 50) ? (50 + Math.random() * 20) * -1 : (50 + Math.random() * 20)));
@@ -135,14 +129,6 @@ window.onload = () => {
         secondaryTextColor = `${hslToHex(primaryHue, 0, secondaryTextLightness)}`;
 
 
-
-
-
-
-
-
-
-
         // Apply styles
         primaryColorBox.style.backgroundColor = primaryColor;
         primaryColorBox.style.color = primaryTextColor;
@@ -155,10 +141,6 @@ window.onload = () => {
         accentColorBox.style.backgroundColor = accentColor;
         accentColorBox.style.color = primaryColor;
         accentColorBox.innerText = `${accentColor}`;
-
-        complementeryColorBox.style.backgroundColor = complementaryColor;
-        complementeryColorBox.style.color = primaryTextColor;
-        complementeryColorBox.innerText = `${complementaryColor}`;
 
         primaryTextColorBox.style.backgroundColor = primaryTextColor;
         primaryTextColorBox.style.color = primaryColor;
@@ -178,7 +160,7 @@ window.onload = () => {
     RandomizeColors()
 
     RandomizeBTN.addEventListener("click", () => {
-        RandomizeColors(0, 0, 50)
+        RandomizeColors()
     })
 
 
