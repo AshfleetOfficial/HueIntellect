@@ -1,0 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+
+
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 100vh;
+    background-color: #eee;
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.box {
+    background-color: #ddd;
+    height: 100%;
+    width: 20%;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: 900;
+    text-wrap: nowrap;
+    text-transform: uppercase;
+}
+
+.btn {
+    cursor: pointer;
+    padding: 5px 15px;
+    border: 1px solid;
+    border-radius: 3px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all ease-in-out 30ms;
+}
+
+#Randomize {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 80px;
+    height: 60px;
+}
