@@ -10,6 +10,48 @@
 </head>
 
 <body>
+
+    <!-- Update header section -->
+    <header>
+        <div class="sliders">
+            <div class="slider" id="hueSlider">
+                <p class="label">
+                    <span>Hue</span>
+                    <span class="space"></span>
+                    <span id="hueControlValue" class="value">0</span>
+                </p>
+                <input type="range" id="hueControl" value="0" min="0" max="360">
+            </div>
+
+
+            <div class="slider" id="saturationSlider">
+                <p class="label">
+                    <span>Saturation</span>
+                    <span class="space"></span>
+                    <span id="saturationControlValue" class="value">100%</span>
+                    <span class="space"></span>
+                    <button id="resetSaturation" class="btn">&#x21bb;</button>
+                </p>
+                <input type="range" id="saturationControl" value="100" min="0" max="100">
+            </div>
+
+
+            <div class="slider" id="lightnessSlider">
+                <p class="label"><span>Lightness</span>
+                    <span class="space"></span>
+                    <span id="lightnessControlValue" class="value">0%</span>
+                    <span class="space"></span>
+                    <button id="resetLightness" class="btn">&#x21bb;</button>
+                </p>
+                <input type="range" id="lightnessControl" value="20" min="0" max="100">
+            </div>
+
+
+        </div>
+        <div class="grayScale"></div>
+    </header>
+
+
     <div class="container">
         <div id="primary" class="box">
             <h3 class="title">Primary</h3>

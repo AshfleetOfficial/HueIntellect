@@ -65,7 +65,7 @@ window.onload = () => {
     const primaryTextColorBox = document.querySelector(".box#primaryText")
     const accentColorBox = document.querySelector(".box#accent")
     const secondaryTextColorBox = document.querySelector(".box#secondaryText")
-
+    const root = document.querySelector(":root");
 
     let primaryColor = hslToHex(0, 0, 0);
     let secondaryColor = hslToHex(0, 0, 0);
@@ -107,8 +107,8 @@ window.onload = () => {
         accentSaturation %= 100;
         let hueDifference = accentHue - primaryHue;
         hueDifference = (hueDifference < 0) ? hueDifference * -1 : hueDifference;
-        if (hueDifference < 140) {
-            accentHue += 140 - hueDifference;
+        if (hueDifference < 120) {
+            accentHue += 120 - hueDifference;
             accentHue %= 360;
         }
         const accentLightness = Min(100, primaryLightness + ((primaryLightness > 50) ? (50 + Math.random() * 20) * -1 : (50 + Math.random() * 20)));
@@ -151,17 +151,87 @@ window.onload = () => {
         secondaryTextColorBox.querySelector(".colorHexCode").innerHTML = `${secondaryTextColor}`;
 
 
-        RandomizeBTN.style.backgroundColor = primaryColor
-        RandomizeBTN.style.color = primaryTextColor
-        RandomizeBTN.style.borderColor = primaryColor
+
+        root.style.setProperty("--primaryColor", primaryColor)
+        root.style.setProperty("--secondaryColor", secondaryColor)
+        root.style.setProperty("--accentColor", accentColor)
+        root.style.setProperty("--primaryTextColor", primaryTextColor)
+        root.style.setProperty("--secondaryTextColor", secondaryTextColor)
+
+
     }
 
 
-    RandomizeColors()
+    RandomizeColors(-1, -1, -70)
 
     RandomizeBTN.addEventListener("click", () => {
-        RandomizeColors()
+        RandomizeColors(-1, -1, -90)
     })
+
+
+    const hueControl = document.getElementById("hueControl")
+    const hueControlValueText = document.getElementById("hueControlValue")
+    let hueControlValue = hueControl.value
+    hueControlValueText.innerHTML = hueControlValue;
+    root.style.setProperty("--selectedHue", hueControlValue)
+
+    hueControl.addEventListener("input", () => {
+        const v = hueControl.value
+        hueControlValueText.innerHTML = v;
+        root.style.setProperty("--selectedHue", v)
+    })
+
+
+    const saturationControl = document.getElementById("saturationControl")
+    const saturationControlValueText = document.getElementById("saturationControlValue")
+    let saturationControlValue = saturationControl.value + "%"
+
+    saturationControlValueText.innerHTML = saturationControlValue;
+    root.style.setProperty("--selectedSaturation", saturationControlValue)
+
+    saturationControl.addEventListener("input", () => {
+        const v = saturationControl.value + "%"
+        saturationControlValueText.innerHTML = v;
+        root.style.setProperty("--selectedSaturation", v)
+    })
+
+
+
+
+    const lightnessControl = document.getElementById("lightnessControl")
+    const lightnessControlValueText = document.getElementById("lightnessControlValue")
+
+    let lightnessControlValue = lightnessControl.value + "%"
+    lightnessControlValueText.innerHTML = lightnessControlValue;
+    root.style.setProperty("--selectedSaturation", lightnessControlValue)
+
+    lightnessControl.addEventListener("input", () => {
+        const v = lightnessControl.value + "%"
+        lightnessControlValueText.innerHTML = v;
+        root.style.setProperty("--selectedLightness", v)
+    })
+
+
+    const resetSaturation = document.getElementById("resetSaturation")
+    resetSaturation.addEventListener("click", () => {
+        saturationControl.value = 100;
+
+        saturationControlValue = saturationControl.value + "%"
+        saturationControlValueText.innerHTML = saturationControlValue;
+        root.style.setProperty("--selectedSaturation", saturationControlValue)
+    })
+
+
+    const resetLightness = document.getElementById("resetLightness")
+    resetLightness.addEventListener("click", () => {
+        lightnessControl.value = 50;
+
+        lightnessControlValue = lightnessControl.value + "%"
+        lightnessControlValueText.innerHTML = lightnessControlValue;
+        root.style.setProperty("--selectedLightness", lightnessControlValue)
+    })
+
+
 
 
 }
