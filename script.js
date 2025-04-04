@@ -85,7 +85,7 @@ window.onload = () => {
 
         //* ========== Primary Color ==========
         const primaryHue = (h >= 0) ? ((h + Math.random() * (Math.random() < 0.1 ? -20 : 20)) + 360) % 360 : Math.floor(Math.random() * 360);
-        const primarySaturation = (s >= 0) ? s : Math.floor(Math.random() * 100);
+        const primarySaturation = (s >= 0) ? s : Math.floor(40 + Math.random() * 60);
         const primaryLightness = (l >= 0) ? l : Math.floor(Math.random() * 25);
         primaryColor = `${hslToHex(primaryHue, primarySaturation, primaryLightness)}`;
 
@@ -93,7 +93,7 @@ window.onload = () => {
         //* ========== Secondary Color ==========
         const secondaryHue = (((primaryHue + (10 + Math.random() * ((Math.random() > 0.5) ? +20 : -20)))) + 360) % 360;
         const secondaryLightness = Min(100, primaryLightness + ((primaryLightness > 50) ? -5 : 5));
-        const secondarySaturation = Min(100, primarySaturation + ((primarySaturation > 50) ? -10 : 10));
+        const secondarySaturation = Min(100, (primarySaturation + ((primarySaturation < 50) ? (13 + Math.random() * 2) : -(13 + Math.random() * 2))));
         secondaryColor = `${hslToHex(secondaryHue, secondarySaturation, secondaryLightness)}`;
 
 
@@ -123,7 +123,7 @@ window.onload = () => {
             : Math.max(0, primaryLightness - 90);
         const secondaryTextLightness = primaryTextLightness + ((primaryTextLightness < 50)
             ? (13 + Math.random() * 2)
-            : (13 + Math.random() * 2) * -1);
+            : ((13 + Math.random() * 2) * -1));
 
         primaryTextColor = `${hslToHex(complementaryHue, 0, primaryTextLightness)}`;
         secondaryTextColor = `${hslToHex(primaryHue, 0, secondaryTextLightness)}`;
@@ -135,7 +135,7 @@ window.onload = () => {
         primaryColorBox.innerText = `${primaryColor}`;
 
         secondaryColorBox.style.backgroundColor = secondaryColor;
-        secondaryColorBox.style.color = accentColor;
+        secondaryColorBox.style.color = primaryTextColor;
         secondaryColorBox.innerText = `${secondaryColor}`;
 
         accentColorBox.style.backgroundColor = accentColor;
