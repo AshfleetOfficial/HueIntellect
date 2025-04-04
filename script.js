@@ -86,7 +86,7 @@ window.onload = () => {
         //* ========== Primary Color ==========
         const primaryHue = (h >= 0) ? ((h + Math.random() * (Math.random() < 0.1 ? -20 : 20)) + 360) % 360 : Math.floor(Math.random() * 360);
         const primarySaturation = (s >= 0) ? s : Math.floor(40 + Math.random() * 60);
-        const primaryLightness = (l >= 0) ? l : Math.floor(Math.random() * 25);
+        const primaryLightness = (l >= 0) ? l : Math.floor(Math.random() * 20);
         primaryColor = `${hslToHex(primaryHue, primarySaturation, primaryLightness)}`;
 
 
@@ -132,23 +132,23 @@ window.onload = () => {
         // Apply styles
         primaryColorBox.style.backgroundColor = primaryColor;
         primaryColorBox.style.color = primaryTextColor;
-        primaryColorBox.innerText = `${primaryColor}`;
+        primaryColorBox.querySelector(".colorHexCode").innerHTML = `${primaryColor}`;
 
         secondaryColorBox.style.backgroundColor = secondaryColor;
         secondaryColorBox.style.color = primaryTextColor;
-        secondaryColorBox.innerText = `${secondaryColor}`;
+        secondaryColorBox.querySelector(".colorHexCode").innerHTML = `${secondaryColor}`;
 
         accentColorBox.style.backgroundColor = accentColor;
         accentColorBox.style.color = primaryColor;
-        accentColorBox.innerText = `${accentColor}`;
+        accentColorBox.querySelector(".colorHexCode").innerHTML = `${accentColor}`;
 
         primaryTextColorBox.style.backgroundColor = primaryTextColor;
         primaryTextColorBox.style.color = primaryColor;
-        primaryTextColorBox.innerText = `${primaryTextColor}`;
+        primaryTextColorBox.querySelector(".colorHexCode").innerHTML = `${primaryTextColor}`;
 
         secondaryTextColorBox.style.backgroundColor = secondaryTextColor;
         secondaryTextColorBox.style.color = primaryColor;
-        secondaryTextColorBox.innerText = `${secondaryTextColor}`;
+        secondaryTextColorBox.querySelector(".colorHexCode").innerHTML = `${secondaryTextColor}`;
 
 
         RandomizeBTN.style.backgroundColor = primaryColor
