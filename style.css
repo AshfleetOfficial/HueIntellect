@@ -74,6 +74,7 @@ header .slider {
     padding: auto;
     width: 100%;
     gap: 30px;
+    user-select: none;
 }
 
 header .slider .label {
@@ -207,7 +208,7 @@ header .grayScale {
     left: 0;
     transform: translateY(100%);
     width: 100%;
-    height: min(10vh, 80px);
+    height: 50px;
     background: transparent !important;
     backdrop-filter: grayscale(100%);
     border: 0px solid #222;

@@ -162,11 +162,7 @@ window.onload = () => {
     }
 
 
-    RandomizeColors(-1, -1, -70)
 
-    RandomizeBTN.addEventListener("click", () => {
-        RandomizeColors(-1, -1, -90)
-    })
 
 
     const hueControl = document.getElementById("hueControl")
@@ -195,15 +191,12 @@ window.onload = () => {
         root.style.setProperty("--selectedSaturation", v)
     })
 
-
-
-
     const lightnessControl = document.getElementById("lightnessControl")
     const lightnessControlValueText = document.getElementById("lightnessControlValue")
 
     let lightnessControlValue = lightnessControl.value + "%"
     lightnessControlValueText.innerHTML = lightnessControlValue;
-    root.style.setProperty("--selectedSaturation", lightnessControlValue)
+    root.style.setProperty("--selectedLightness", lightnessControlValue)
 
     lightnessControl.addEventListener("input", () => {
         const v = lightnessControl.value + "%"
@@ -212,6 +205,7 @@ window.onload = () => {
     })
 
 
+    // Reset
     const resetSaturation = document.getElementById("resetSaturation")
     resetSaturation.addEventListener("click", () => {
         saturationControl.value = 100;
@@ -231,6 +225,12 @@ window.onload = () => {
         root.style.setProperty("--selectedLightness", lightnessControlValue)
     })
 
+
+    RandomizeColors(-1, -1, 70)
+
+    RandomizeBTN.addEventListener("click", () => {
+        RandomizeColors(-1, -1, -90)
+    })
 
 
 
