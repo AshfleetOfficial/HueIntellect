@@ -226,8 +226,8 @@ header #ShowCustomColorWindow img {
 
 .slider .warning {
     color: var(--secondaryTextColor);
-    font-size: 0.70rem;
-    font-weight: 300;
+    font-size: 0.75rem;
+    font-weight: 600;
     text-align: center;
     width: 100%;
     line-height: 1.5;
