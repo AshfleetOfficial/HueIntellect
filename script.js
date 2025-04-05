@@ -7,7 +7,7 @@ const Min = (a, b) => {
 
 
 const Max = (a, b) => {
-    return Math.min(a, b);
+    return Math.max(a, b);
 }
 
 function hslToHex(h, s, l) {
@@ -86,7 +86,6 @@ window.onload = () => {
     const RandomizeColors = (h = -1, s = -1, l = -1) => {
 
         if (h >= 0) {
-            h += 360;
             h %= 360;
         }
         l = Min(l, 100);
@@ -94,7 +93,7 @@ window.onload = () => {
 
 
         //* ========== Primary Color ==========
-        const primaryHue = (h >= 0) ? ((h + Math.random() * (Math.random() < 0.1 ? -20 : 20)) + 360) % 360 : Math.floor(Math.random() * 360);
+        const primaryHue = (h >= 0) ? h : Math.floor(Math.random() * 360);
         const primarySaturation = (s >= 0) ? s : Math.floor(40 + Math.random() * 60);
         const primaryLightness = (l >= 0) ? l + ((Math.random() > 0.5) ? (Math.floor(Math.random() * 5)) : (Math.floor(Math.random() * 5) * -1)) : Math.floor(Math.random() * 20);
         primaryColor = `${hslToHex(primaryHue, primarySaturation, primaryLightness)}`;
@@ -102,7 +101,7 @@ window.onload = () => {
 
         //* ========== Secondary Color ==========
         const secondaryHue = (((primaryHue + (10 + Math.random() * ((Math.random() > 0.5) ? +20 : -20)))) + 360) % 360;
-        const secondaryLightness = Min(100, primaryLightness + ((primaryLightness > 50) ? -5 : 5));
+        const secondaryLightness = Min(100, primaryLightness + ((primaryLightness > 50) ? ((10 + Math.random() * 5) * -1) : (10 + Math.random() * 5)));
         const secondarySaturation = Min(100, (primarySaturation + ((primarySaturation < 50) ? (13 + Math.random() * 2) : -(13 + Math.random() * 2))));
         secondaryColor = `${hslToHex(secondaryHue, secondarySaturation, secondaryLightness)}`;
 
@@ -114,14 +113,15 @@ window.onload = () => {
         //* ========== Accent Color ==========
         let accentHue = Math.floor(Math.random() * 360);
         let accentSaturation = Min(Math.floor(40 + Math.random() * 60) + s, 100);
-        accentSaturation %= 100;
         let hueDifference = accentHue - primaryHue;
         hueDifference = (hueDifference < 0) ? hueDifference * -1 : hueDifference;
-        if (hueDifference < 120) {
-            accentHue += 120 - hueDifference;
+        if (hueDifference < 160) {
+            accentHue += 160 - hueDifference;
             accentHue %= 360;
         }
-        const accentLightness = Min(100, primaryLightness + ((primaryLightness > 50) ? (50 + Math.random() * 20) * -1 : (50 + Math.random() * 20)));
+        const accentLightness = Max(40, Min(80, primaryLightness + ((primaryLightness > 50) ? ((50 + Math.random() * 10) * -1) : (50 + Math.random() * 10))));
+        console.clear()
+        console.log(accentLightness);
 
         accentColor = `${hslToHex(accentHue, accentSaturation, accentLightness)}`;
 
@@ -132,8 +132,8 @@ window.onload = () => {
             ? Math.min(100, primaryLightness + 90)
             : Math.max(0, primaryLightness - 90);
         const secondaryTextLightness = primaryTextLightness + ((primaryTextLightness < 50)
-            ? (13 + Math.random() * 2)
-            : ((13 + Math.random() * 2) * -1));
+            ? (13 + Math.random() * 5)
+            : ((13 + Math.random() * 5) * -1));
 
         primaryTextColor = `${hslToHex(complementaryHue, 0, primaryTextLightness)}`;
         secondaryTextColor = `${hslToHex(primaryHue, 0, secondaryTextLightness)}`;
@@ -176,6 +176,7 @@ window.onload = () => {
             (useCustomHue) ? CustomHue : -1,
             (useCustomSaturation) ? CustomSaturation : -1,
             (useCustomLightness) ? CustomLightness : -1
+
         )
     }
 
@@ -189,39 +190,68 @@ window.onload = () => {
     const lightnessControl = document.getElementById("lightnessControl")
     const lightnessControlValueText = document.getElementById("lightnessControlValue")
 
+    const hueSlider = document.getElementById("hueSlider")
+    const saturationSlider = document.getElementById("saturationSlider")
+    const lightnessSlider = document.getElementById("lightnessSlider")
 
 
-    const updateHue = () => {
-        const v = hueControl.value
+    const updateHue = (n = -1) => {
+        const v = (n >= 0) ? n : hueControl.value
         hueControlValueText.innerHTML = v;
         root.style.setProperty("--selectedHue", v)
-        CustomHue = hueControl.value
+        CustomHue = parseInt(v)
+
     }
     updateHue()
+
+
+    // Changing Custom Saturation
+    const updateSaturation = (n = -1) => {
+        const v = (n >= 0) ? n : saturationControl.value
+        saturationControlValueText.innerHTML = v;
+        root.style.setProperty("--selectedSaturation", v + "%")
+        CustomSaturation = parseInt(v)
+    }
+    updateSaturation()
+
+    // Changing Custom Lightness
+    const updateLightness = (n = -1) => {
+        const v = (n >= 0) ? n : lightnessControl.value
+        lightnessControlValueText.innerHTML = v;
+        root.style.setProperty("--selectedLightness", v + "%")
+        CustomLightness = parseInt(v)
+    }
+    updateLightness()
+
+    const UpdateSlidersVisibility = () => {
+        const HIDE_CLASS = "hide"
+        if (useCustomHue) {
+            hueSlider.classList.remove(HIDE_CLASS)
+        } else {
+            hueSlider.classList.add(HIDE_CLASS)
+        }
+        if (useCustomSaturation) {
+            saturationSlider.classList.remove(HIDE_CLASS)
+        } else {
+            saturationSlider.classList.add(HIDE_CLASS)
+        }
+        if (useCustomLightness) {
+            lightnessSlider.classList.remove(HIDE_CLASS)
+        } else {
+            lightnessSlider.classList.add(HIDE_CLASS)
+        }
+    }
+
+    UpdateSlidersVisibility()
+
+
+
     hueControl.addEventListener("input", () => {
         updateHue()
     })
-
-    // Changing Custom Saturation
-    const updateSaturation = () => {
-        const v = saturationControl.value + "%"
-        saturationControlValueText.innerHTML = v;
-        root.style.setProperty("--selectedSaturation", v)
-        CustomSaturation = saturationControl.value
-    }
-    updateSaturation()
     saturationControl.addEventListener("input", () => {
         updateSaturation()
     })
-
-    // Changing Custom Lightness
-    const updateLightness = () => {
-        const v = lightnessControl.value + "%"
-        lightnessControlValueText.innerHTML = v;
-        root.style.setProperty("--selectedLightness", v)
-        CustomLightness = lightnessControl.value
-    }
-    updateLightness()
     lightnessControl.addEventListener("input", () => {
         updateLightness()
     })
@@ -237,7 +267,7 @@ window.onload = () => {
 
     const resetLightness = document.getElementById("resetLightness")
     resetLightness.addEventListener("click", () => {
-        lightnessControl.value = (lightnessControl.value == 80) ? 20 : (lightnessControl.value == 20) ? 80 : (lightnessControl.value > 50) ? 20 : 80;
+        lightnessControl.value = (lightnessControl.value == 90) ? 10 : (lightnessControl.value == 10) ? 90 : (lightnessControl.value > 50) ? 10 : 90;
         updateLightness()
     })
 
@@ -259,27 +289,41 @@ window.onload = () => {
         }
     })
 
+    const ShowCustomColorWindow = document.getElementById("ShowCustomColorWindow")
+
+    ShowCustomColorWindow.addEventListener("click", () => {
+        if (!sliders.classList.contains(EXPANDED_CLASS)) {
+            sliders.classList.add(EXPANDED_CLASS)
+        }
+    })
+
 
     // Custom Controls Enable/Disable
     const CustomHueCheckBox = document.getElementById("CustomHue")
     const CustomSaturationCheckBox = document.getElementById("CustomSaturation")
     const CustomLightnessCheckBox = document.getElementById("CustomLightness")
 
+    useCustomHue = CustomHueCheckBox.checked
     CustomHueCheckBox.addEventListener("input", () => {
         useCustomHue = CustomHueCheckBox.checked
+        UpdateSlidersVisibility()
     })
 
+    useCustomSaturation = CustomSaturationCheckBox.checked
     CustomSaturationCheckBox.addEventListener("input", () => {
         useCustomSaturation = CustomSaturationCheckBox.checked
+        UpdateSlidersVisibility()
     })
 
+    useCustomLightness = CustomLightnessCheckBox.checked
     CustomLightnessCheckBox.addEventListener("input", () => {
         useCustomLightness = CustomLightnessCheckBox.checked
+        UpdateSlidersVisibility()
     })
 
+    UpdateSlidersVisibility()
 
-    RandomizeColors(-1, -1, -10)
-
+    Randomize()
     RandomizeBTN.addEventListener("click", () => {
         Randomize()
     })

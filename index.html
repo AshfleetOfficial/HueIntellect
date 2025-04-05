@@ -13,75 +13,79 @@
 
     <!-- Update header section -->
     <header>
-        <div class="sliders expanded">
-            <div class="colorPreview"></div>
-            <div id="closeCustomColorWindowButton">&cross;</div>
-            <div class="customColorControl">
-                <p class="title">
-                    Custom Color Control
-                </p>
-                <div class="checkboxes">
-                    <div class="checkbox">
-                        <div class="label">H</div>
-                        <div class="space"></div>
-                        <input type="checkbox" name="" id="CustomHue">
-                    </div>
+        <button class="btn" id="ShowCustomColorWindow">
+            <img width="40" height="40" src="./Images/ColorWheel.png" alt="">
+        </button>
+    </header>
+    <div class="grayScale"></div>
+    <div class="sliders">
+        <div class="colorPreview"></div>
+        <div id="closeCustomColorWindowButton">&cross;</div>
+        <div class="customColorControl">
+            <p class="title">
+                Custom Color Control
+            </p>
+            <div class="checkboxes">
+                <div class="checkbox">
+                    <div class="label">H</div>
+                    <div class="space"></div>
+                    <input type="checkbox" name="" id="CustomHue">
+                </div>
 
-                    <div class="checkbox">
-                        <div class="label">S</div>
-                        <div class="space"></div>
-                        <input type="checkbox" name="" id="CustomSaturation">
-                    </div>
+                <div class="checkbox">
+                    <div class="label">S</div>
+                    <div class="space"></div>
+                    <input type="checkbox" name="" id="CustomSaturation">
+                </div>
 
-                    <div class="checkbox">
-                        <div class="label">L</div>
-                        <div class="space"></div>
-                        <input type="checkbox" name="" id="CustomLightness">
-                    </div>
+                <div class="checkbox">
+                    <div class="label">L</div>
+                    <div class="space"></div>
+                    <input type="checkbox" name="" id="CustomLightness">
                 </div>
             </div>
-            <div class="slider" id="hueSlider">
-                <p class="label">
-
-                    <span>Hue</span>
-                    <span class="space"></span>
-                    <span id="hueControlValue" class="value">0</span>
-                </p>
-                <input type="range" id="hueControl" value="0" min="0" max="360">
-            </div>
-
-
-            <div class="slider" id="saturationSlider">
-                <p class="label">
-
-                    <span>Saturation</span>
-                    <span class="space"></span>
-                    <span id="saturationControlValue" class="value">100%</span>
-                    <span class="space"></span>
-                    <button id="resetSaturation" class="btn">&#x21bb;</button>
-                </p>
-                <input type="range" id="saturationControl" value="100" min="0" max="100">
-            </div>
-
-
-            <div class="slider" id="lightnessSlider">
-                <p class="label">
-
-                    <span>Lightness</span>
-                    <span class="space"></span>
-                    <span id="lightnessControlValue" class="value">0%</span>
-                    <span class="space"></span>
-                    <button id="resetLightness2" class="btn">&#x21bb;</button>
-                    <span class="space"></span>
-                    <button id="resetLightness" class="btn">&leftrightharpoons;</button>
-                </p>
-                <input type="range" id="lightnessControl" value="10" min="0" max="100">
-            </div>
-
-
         </div>
-        <div class="grayScale"></div>
-    </header>
+        <div class="slider" id="hueSlider">
+            <p class="label">
+
+                <span>Hue</span>
+                <span class="space"></span>
+                <span id="hueControlValue" class="value">0</span>
+            </p>
+            <input type="range" id="hueControl" value="0" min="0" max="360">
+        </div>
+
+
+        <div class="slider" id="saturationSlider">
+            <p class="label">
+
+                <span>Saturation</span>
+                <span class="space"></span>
+                <span id="saturationControlValue" class="value">100%</span>
+                <span class="space"></span>
+                <button id="resetSaturation" class="btn">&#x21bb;</button>
+            </p>
+            <input type="range" id="saturationControl" value="100" min="0" max="100">
+        </div>
+
+
+        <div class="slider" id="lightnessSlider">
+            <p class="label">
+
+                <span>Lightness</span>
+                <span class="space"></span>
+                <span id="lightnessControlValue" class="value">0%</span>
+                <span class="space"></span>
+                <button id="resetLightness2" class="btn">&#x21bb;</button>
+                <span class="space"></span>
+                <button id="resetLightness" class="btn">&leftrightharpoons;</button>
+            </p>
+            <input type="range" id="lightnessControl" value="10" min="0" max="100">
+            <p class="warning">Keep Lightness between 0-20 or 80-100 for better CONTRAST</p>
+        </div>
+
+
+    </div>
 
 
     <div class="container">
