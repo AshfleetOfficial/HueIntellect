@@ -73,6 +73,16 @@ window.onload = () => {
     let secondaryTextColor = hslToHex(0, 0, 0);
     let accentColor = hslToHex(0, 0, 0);
 
+
+    let useCustomHue = false;
+    let useCustomSaturation = false;
+    let useCustomLightness = false;
+    let CustomHue = 0
+    let CustomSaturation = 0
+    let CustomLightness = 0
+
+
+
     const RandomizeColors = (h = -1, s = -1, l = -1) => {
 
         if (h >= 0) {
@@ -86,7 +96,7 @@ window.onload = () => {
         //* ========== Primary Color ==========
         const primaryHue = (h >= 0) ? ((h + Math.random() * (Math.random() < 0.1 ? -20 : 20)) + 360) % 360 : Math.floor(Math.random() * 360);
         const primarySaturation = (s >= 0) ? s : Math.floor(40 + Math.random() * 60);
-        const primaryLightness = (l >= 0) ? l : Math.floor(Math.random() * 20);
+        const primaryLightness = (l >= 0) ? l + ((Math.random() > 0.5) ? (Math.floor(Math.random() * 5)) : (Math.floor(Math.random() * 5) * -1)) : Math.floor(Math.random() * 20);
         primaryColor = `${hslToHex(primaryHue, primarySaturation, primaryLightness)}`;
 
 
@@ -161,47 +171,59 @@ window.onload = () => {
 
     }
 
+    const Randomize = () => {
+        RandomizeColors(
+            (useCustomHue) ? CustomHue : -1,
+            (useCustomSaturation) ? CustomSaturation : -1,
+            (useCustomLightness) ? CustomLightness : -1
+        )
+    }
 
 
 
-
+    // Changing Custom Hue
     const hueControl = document.getElementById("hueControl")
     const hueControlValueText = document.getElementById("hueControlValue")
-    let hueControlValue = hueControl.value
-    hueControlValueText.innerHTML = hueControlValue;
-    root.style.setProperty("--selectedHue", hueControlValue)
-
-    hueControl.addEventListener("input", () => {
-        const v = hueControl.value
-        hueControlValueText.innerHTML = v;
-        root.style.setProperty("--selectedHue", v)
-    })
-
-
     const saturationControl = document.getElementById("saturationControl")
     const saturationControlValueText = document.getElementById("saturationControlValue")
-    let saturationControlValue = saturationControl.value + "%"
-
-    saturationControlValueText.innerHTML = saturationControlValue;
-    root.style.setProperty("--selectedSaturation", saturationControlValue)
-
-    saturationControl.addEventListener("input", () => {
-        const v = saturationControl.value + "%"
-        saturationControlValueText.innerHTML = v;
-        root.style.setProperty("--selectedSaturation", v)
-    })
-
     const lightnessControl = document.getElementById("lightnessControl")
     const lightnessControlValueText = document.getElementById("lightnessControlValue")
 
-    let lightnessControlValue = lightnessControl.value + "%"
-    lightnessControlValueText.innerHTML = lightnessControlValue;
-    root.style.setProperty("--selectedLightness", lightnessControlValue)
 
-    lightnessControl.addEventListener("input", () => {
+
+    const updateHue = () => {
+        const v = hueControl.value
+        hueControlValueText.innerHTML = v;
+        root.style.setProperty("--selectedHue", v)
+        CustomHue = hueControl.value
+    }
+    updateHue()
+    hueControl.addEventListener("input", () => {
+        updateHue()
+    })
+
+    // Changing Custom Saturation
+    const updateSaturation = () => {
+        const v = saturationControl.value + "%"
+        saturationControlValueText.innerHTML = v;
+        root.style.setProperty("--selectedSaturation", v)
+        CustomSaturation = saturationControl.value
+    }
+    updateSaturation()
+    saturationControl.addEventListener("input", () => {
+        updateSaturation()
+    })
+
+    // Changing Custom Lightness
+    const updateLightness = () => {
         const v = lightnessControl.value + "%"
         lightnessControlValueText.innerHTML = v;
         root.style.setProperty("--selectedLightness", v)
+        CustomLightness = lightnessControl.value
+    }
+    updateLightness()
+    lightnessControl.addEventListener("input", () => {
+        updateLightness()
     })
 
 
@@ -209,28 +231,61 @@ window.onload = () => {
     const resetSaturation = document.getElementById("resetSaturation")
     resetSaturation.addEventListener("click", () => {
         saturationControl.value = 100;
-
-        saturationControlValue = saturationControl.value + "%"
-        saturationControlValueText.innerHTML = saturationControlValue;
-        root.style.setProperty("--selectedSaturation", saturationControlValue)
+        updateSaturation()
     })
 
 
     const resetLightness = document.getElementById("resetLightness")
     resetLightness.addEventListener("click", () => {
-        lightnessControl.value = 50;
+        lightnessControl.value = (lightnessControl.value == 80) ? 20 : (lightnessControl.value == 20) ? 80 : (lightnessControl.value > 50) ? 20 : 80;
+        updateLightness()
+    })
 
-        lightnessControlValue = lightnessControl.value + "%"
-        lightnessControlValueText.innerHTML = lightnessControlValue;
-        root.style.setProperty("--selectedLightness", lightnessControlValue)
+    const resetLightness2 = document.getElementById("resetLightness2")
+    resetLightness2.addEventListener("click", () => {
+        lightnessControl.value = 50;
+        updateLightness()
     })
 
 
-    RandomizeColors(-1, -1, 70)
+    // Close Window
+    const closeWindowBtn = document.getElementById("closeCustomColorWindowButton")
+    const sliders = document.querySelector(".sliders")
+    const EXPANDED_CLASS = "expanded"
+
+    closeWindowBtn.addEventListener("click", () => {
+        if (sliders.classList.contains(EXPANDED_CLASS)) {
+            sliders.classList.remove(EXPANDED_CLASS)
+        }
+    })
+
+
+    // Custom Controls Enable/Disable
+    const CustomHueCheckBox = document.getElementById("CustomHue")
+    const CustomSaturationCheckBox = document.getElementById("CustomSaturation")
+    const CustomLightnessCheckBox = document.getElementById("CustomLightness")
+
+    CustomHueCheckBox.addEventListener("input", () => {
+        useCustomHue = CustomHueCheckBox.checked
+    })
+
+    CustomSaturationCheckBox.addEventListener("input", () => {
+        useCustomSaturation = CustomSaturationCheckBox.checked
+    })
+
+    CustomLightnessCheckBox.addEventListener("input", () => {
+        useCustomLightness = CustomLightnessCheckBox.checked
+    })
+
+
+    RandomizeColors(-1, -1, -10)
 
     RandomizeBTN.addEventListener("click", () => {
-        RandomizeColors(-1, -1, -90)
+        Randomize()
     })
+
+
+
 
 
 

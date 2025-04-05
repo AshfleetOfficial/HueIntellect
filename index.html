@@ -13,7 +13,33 @@
 
     <!-- Update header section -->
     <header>
-        <div class="sliders">
+        <div class="sliders expanded">
+            <div class="colorPreview"></div>
+            <div id="closeCustomColorWindowButton">&cross;</div>
+            <div class="customColorControl">
+                <p class="title">
+                    Custom Color Control
+                </p>
+                <div class="checkboxes">
+                    <div class="checkbox">
+                        <div class="label">H</div>
+                        <div class="space"></div>
+                        <input type="checkbox" name="" id="CustomHue">
+                    </div>
+
+                    <div class="checkbox">
+                        <div class="label">S</div>
+                        <div class="space"></div>
+                        <input type="checkbox" name="" id="CustomSaturation">
+                    </div>
+
+                    <div class="checkbox">
+                        <div class="label">L</div>
+                        <div class="space"></div>
+                        <input type="checkbox" name="" id="CustomLightness">
+                    </div>
+                </div>
+            </div>
             <div class="slider" id="hueSlider">
                 <p class="label">
 
@@ -45,9 +71,11 @@
                     <span class="space"></span>
                     <span id="lightnessControlValue" class="value">0%</span>
                     <span class="space"></span>
-                    <button id="resetLightness" class="btn">&#x21bb;</button>
+                    <button id="resetLightness2" class="btn">&#x21bb;</button>
+                    <span class="space"></span>
+                    <button id="resetLightness" class="btn">&leftrightharpoons;</button>
                 </p>
-                <input type="range" id="lightnessControl" value="20" min="0" max="100">
+                <input type="range" id="lightnessControl" value="10" min="0" max="100">
             </div>
 
 

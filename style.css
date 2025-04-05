@@ -35,6 +35,24 @@
 }
 
 
+
+.btn {
+    cursor: pointer;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all ease-in-out 30ms;
+    background-color: var(--secondaryColor);
+    color: var(--primaryTextColor);
+    box-sizing: border-box;
+}
+
 header {
     position: fixed;
     top: 0;
@@ -49,7 +67,8 @@ header {
 }
 
 header .sliders {
-    width: Clamp(300px, 20vw, 50vw);
+    overflow: hidden;
+    width: Min(350px, 100vw);
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -61,9 +80,57 @@ header .sliders {
     top: 0px;
     right: 0px;
     z-index: 2000;
-    padding: 20px;
+    padding-bottom: 20px;
     border-radius: 2px;
     gap: 30px;
+    transform: translateY(-110%);
+    transition: transform ease-in-out 200ms;
+}
+
+header .sliders.expanded {
+    transform: translateY(0%);
+}
+
+header .sliders #closeCustomColorWindowButton {
+    display: none !important;
+}
+
+header .sliders.expanded #closeCustomColorWindowButton {
+    display: flex !important;
+}
+
+header .sliders .colorPreview {
+    width: 40px;
+    height: 30px;
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    background-color: hsl(var(--selectedHue), var(--selectedSaturation), var(--selectedLightness));
+    box-shadow: 0 0 5px hsl(var(--selectedHue), var(--selectedSaturation), var(--selectedLightness));
+}
+
+header .sliders #closeCustomColorWindowButton {
+    width: 40px;
+    height: 30px;
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+    background-color: var(--accentColor);
+    color: var(--primaryColor);
+    transition: all ease-in-out 100ms;
+    user-select: none;
+    border-radius: 2px;
+}
+
+header .sliders #closeCustomColorWindowButton:hover {
+    background-color: var(--primaryTextColor);
+    color: var(--primaryColor);
 }
 
 header .slider {
@@ -71,10 +138,9 @@ header .slider {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: auto;
+    padding: 0 20px;
     width: 100%;
     gap: 30px;
-    user-select: none;
 }
 
 header .slider .label {
@@ -82,14 +148,26 @@ header .slider .label {
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+    height: 35px;
+    width: 100%;
+    user-select: none;
 }
 
 header .slider .label .btn {
     box-shadow: 0px 0px 2px 1px var(--secondaryTextColor);
     border-radius: 100%;
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+    font-weight: 100;
 }
+
+header .slider .label .btn:hover {
+    background-color: var(--primaryTextColor);
+    color: var(--primaryColor);
+}
+
+
 
 header .slider .label .value {
     max-width: 2.2rem;
@@ -109,46 +187,50 @@ header .slider .label .value {
 }
 
 
-header .slider .label .space {
+header .sliders .space {
     background-color: transparent !important;
     width: 25px;
     text-align: center;
     font-weight: 800;
 }
 
-header .slider .label .space::after {
+header .sliders .space::after {
     content: ":";
 }
 
 
-input[type='range'] {
-    width: 100%;
-    height: 6px;
+.sliders input[type='range'] {
     -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
     background-color: #ffffff;
     box-sizing: content-box;
     cursor: pointer;
     border-radius: 4px;
     transition: all ease-in-out 50ms;
+    /* box-shadow: 0 0 5px var(--primaryTextColor); */
+    /* border: 1px solid var(--secondaryTextColor); */
 
 }
 
-input[type='range']::-webkit-slider-thumb {
+.sliders input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 26px;
-    height: 26px;
+    width: 15px;
+    height: 15px;
     background-color: var(--primaryTextColor);
-    border: 5px solid var(--secondaryTextColor);
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all ease-in-out 50ms;
+    transition: scale ease-in-out 50ms;
+    box-shadow: 0 0 5px var(--primaryTextColor);
+
 
 }
 
-input[type='range']::-webkit-slider-thumb:active {
-    border-width: 13px;
+.sliders input[type='range']::-webkit-slider-thumb:hover,
+.sliders input[type='range']::-webkit-slider-thumb:active {
+    scale: 1.25;
 }
 
 
@@ -165,41 +247,44 @@ input[type='range']::-webkit-slider-thumb:active {
 
 }
 
-#hueControl[type='range']::-webkit-slider-thumb {
-    border-color: hsl(var(--selectedHue), var(--selectedSaturation), var(--selectedLightness));
-    box-shadow: 0 0 15px hsl(var(--selectedHue), var(--selectedSaturation), var(--selectedLightness));
-}
-
 #saturationControl {
-    border-radius: 10px 0 0 10px;
     background: linear-gradient(to right,
             hsl(var(--selectedHue), 0%, var(--selectedLightness)) 0%,
-            hsl(var(--selectedHue), 100%, var(--selectedLightness)) 99%,
-            var(--primaryTextColor) 99%);
+            hsl(var(--selectedHue), 100%, var(--selectedLightness)) 100%);
 
-}
-
-#saturationControl[type='range']::-webkit-slider-thumb {
-    border-color: hsl(var(--selectedHue), var(--selectedSaturation), var(--selectedLightness));
-    box-shadow: 0 0 15px hsl(var(--selectedHue), var(--selectedSaturation), var(--selectedLightness));
 }
 
 
 #lightnessControl {
     background: linear-gradient(to right,
             hsl(var(--selectedHue), var(--selectedSaturation), 0%) 0%,
-            hsl(var(--selectedHue), var(--selectedSaturation), 50%) 49%,
-            hsl(var(--selectedHue), 0%, 100%) 50%,
-            hsl(var(--selectedHue), var(--selectedSaturation), 50%) 51%,
+            hsl(var(--selectedHue), var(--selectedSaturation), 19%) 19%,
+            hsl(var(--selectedHue), 0%, 100%) 20%,
+            hsl(var(--selectedHue), var(--selectedSaturation), 21%) 21%,
+            hsl(var(--selectedHue), var(--selectedSaturation), 49%) 49%,
+
+            /* hsl(var(--selectedHue), var(--selectedSaturation), 90%) 49%,
+    hsl(var(--selectedHue), var(--selectedSaturation), 50%) 50%,
+    hsl(var(--selectedHue), var(--selectedSaturation), 50%) 50%,
+    hsl(var(--selectedHue), var(--selectedSaturation), 10%) 51%, */
+
+            hsl(var(--selectedHue), var(--selectedSaturation), 51%) 51%,
+            hsl(var(--selectedHue), var(--selectedSaturation), 79%) 79%,
+            hsl(var(--selectedHue), 0%, 0%) 80%,
+            hsl(var(--selectedHue), var(--selectedSaturation), 81%) 81%,
             hsl(var(--selectedHue), var(--selectedSaturation), 100%));
 
 }
 
-#lightnessControl[type='range']::-webkit-slider-thumb {
-    border-color: hsl(var(--selectedHue), var(--selectedSaturation), var(--selectedLightness));
-    box-shadow: 0 0 15px hsl(var(--selectedHue), var(--selectedSaturation), var(--selectedLightness));
-}
 
+#hueControl[type='range']::-webkit-slider-thumb,
+#saturationControl[type='range']::-webkit-slider-thumb,
+#lightnessControl[type='range']::-webkit-slider-thumb {
+    background: hsl(var(--selectedHue), 0%, var(--selectedLightness));
+    filter: invert(100%);
+    box-shadow: 0 0 10px 5px var(--p);
+    box-shadow: 0 0 5px 2px hsl(var(--selectedHue), var(--selectedSaturation), var(--selectedLightness));
+}
 
 
 header .grayScale {
@@ -216,6 +301,76 @@ header .grayScale {
 }
 
 
+.sliders .customColorControl {
+    background-color: var(--primaryColor);
+    box-shadow: 0 3px 10px var(--secondaryColor);
+    color: var(--primaryTextColor);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding: 15px 65px;
+    gap: 15px;
+}
+
+.sliders .customColorControl .title {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.sliders .customColorControl .space {
+    width: 15px;
+    font-weight: 500;
+}
+
+.sliders .customColorControl .checkboxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 0 3px;
+}
+
+.sliders .customColorControl .checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1rem;
+}
+
+.sliders .customColorControl .checkbox .label {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.sliders .customColorControl .checkbox input[type="checkbox"] {
+    -webkit-appearance: none;
+    width: 1rem;
+    height: 100%;
+    border-radius: 1px;
+    background-color: var(--primaryTextColor);
+    color: var(--primaryColor);
+    cursor: pointer;
+    text-align: center;
+    box-sizing: content-box;
+    border: 2px solid transparent;
+}
+
+.sliders .customColorControl .checkbox input[type="checkbox"]:checked {
+    background-color: var(--secondaryColor);
+    color: var(--primaryTextColor);
+    border-color: var(--primaryTextColor);
+}
+
+.sliders .customColorControl .checkbox input[type="checkbox"]:checked::after {
+    content: "\2714";
+    font-weight: 600;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+}
 
 .container {
     position: relative;
@@ -260,22 +415,6 @@ header .grayScale {
 
 }
 
-.btn {
-    cursor: pointer;
-    padding: 5px 15px;
-    border: none;
-    border-radius: 4px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    transition: all ease-in-out 30ms;
-    background-color: var(--secondaryColor);
-    color: var(--primaryTextColor);
-    box-sizing: border-box;
-}
 
 #Randomize {
     position: absolute;
