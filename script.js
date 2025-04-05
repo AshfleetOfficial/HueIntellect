@@ -102,7 +102,7 @@ window.onload = () => {
         //* ========== Secondary Color ==========
         const secondaryHue = (((primaryHue + (10 + Math.random() * ((Math.random() > 0.5) ? +20 : -20)))) + 360) % 360;
         const secondaryLightness = Min(100, primaryLightness + ((primaryLightness > 50) ? ((10 + Math.random() * 5) * -1) : (10 + Math.random() * 5)));
-        const secondarySaturation = Min(100, (primarySaturation + ((primarySaturation < 50) ? (13 + Math.random() * 2) : -(13 + Math.random() * 2))));
+        const secondarySaturation = Min(100, (primarySaturation));
         secondaryColor = `${hslToHex(secondaryHue, secondarySaturation, secondaryLightness)}`;
 
 
@@ -120,8 +120,6 @@ window.onload = () => {
             accentHue %= 360;
         }
         const accentLightness = Max(40, Min(80, primaryLightness + ((primaryLightness > 50) ? ((50 + Math.random() * 10) * -1) : (50 + Math.random() * 10))));
-        console.clear()
-        console.log(accentLightness);
 
         accentColor = `${hslToHex(accentHue, accentSaturation, accentLightness)}`;
 
